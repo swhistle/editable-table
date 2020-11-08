@@ -1,6 +1,31 @@
 import React from 'react';
-import TableRow from "./TableRow";
-import TableCell from "./TableCell";
+import styled from 'styled-components';
+
+import TableRow from './TableRow';
+import TableCell from './TableCell';
+import {TABLE_BORDER, TABLE_HEADER_COLOR, TEXT_MAIN_COLOR} from '../../constants/constants';
+
+const TableContent = styled.div`
+    border: ${TABLE_BORDER};
+    border-right: 0;
+    color: ${TEXT_MAIN_COLOR};
+    font-size: 1rem;
+`;
+
+const TableHeader = styled.div`
+    background-color: ${TABLE_HEADER_COLOR};
+    font-weight: bold;
+`;
+
+const TableRowList = styled.ul`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+`;
+
+const TableListItem = styled.li`
+    border-top: ${TABLE_BORDER};
+`;
 
 function Table(props) {
     const {items, hideElementId = true} = props;
@@ -26,30 +51,38 @@ function Table(props) {
         const elementKeys = getElementKeys(tableElement);
 
         tableContent = (
-            <div className='table'>
-                <TableRow values={elementKeys}/>
-                <ul>
+            <TableContent>
+                <TableHeader>
+                    <TableRow values={elementKeys}/>
+                </TableHeader>
+                <TableRowList>
                     {
                         items.map((element) => (
-                            <li key={element.id || getElementValues(element)[0]}> {/* in case the element has no 'id'  we will use value of its first key */}
+                            <TableListItem
+                                key={element.id || getElementValues(element)[0]}> {/* in case the element has no 'id'  we will use value of its first key */}
                                 <TableRow values={getElementValues(element)}/>
-                            </li>
+                            </TableListItem>
                         ))
                     }
-                </ul>
-            </div>
+                </TableRowList>
+            </TableContent>
         )
     } else {
         tableContent = (
-            <ul>
-                {
-                    items.map((element, index) => (
-                        <li key={element + '_' + index}>
-                            <TableCell value={element}/>
-                        </li>
-                    ))
-                }
-            </ul>
+            <TableContent>
+                <TableHeader>
+                    <TableCell value="value"/>
+                </TableHeader>
+                <TableRowList>
+                    {
+                        items.map((element, index) => (
+                            <TableListItem key={element + '_' + index}>
+                                <TableCell value={element}/>
+                            </TableListItem>
+                        ))
+                    }
+                </TableRowList>
+            </TableContent>
         )
     }
 

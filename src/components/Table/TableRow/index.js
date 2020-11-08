@@ -1,20 +1,33 @@
 import React from 'react';
+import styled from 'styled-components';
 import TableCell from '../TableCell';
 
 function TableRow(props) {
     const {values} = props;
 
+    const TableCellsContainer = styled.div`
+        display: flex;
+        justify-content: space-between;
+    `;
+
+    const TableCellWrapper = styled.div`
+        width: ${100 / values.length}%;
+    `;
+
     return (
-        <div>
+        <TableCellsContainer>
             {
                 values.map((value, index) => (
-                    <TableCell
-                        key={value + '_' + index}
-                        value={value}
-                    />
+                    <TableCellWrapper>
+                        <TableCell
+                            key={value + '_' + index}
+                            value={value}
+                        />
+                    </TableCellWrapper>
+
                 ))
             }
-        </div>
+        </TableCellsContainer>
     )
 }
 
