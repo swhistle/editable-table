@@ -18,9 +18,8 @@ function TableRow(props) {
         <TableCellsContainer>
             {
                 values.map((value, index) => (
-                    <TableCellWrapper>
+                    <TableCellWrapper key={value + '_' + index}>
                         <TableCell
-                            key={value + '_' + index}
                             value={value}
                         />
                     </TableCellWrapper>
