@@ -115,11 +115,7 @@ class Table extends React.PureComponent {
             )
         }
 
-        return (
-            <>
-                {tableContent}
-            </>
-        );
+        return tableContent;
     }
 }
 
