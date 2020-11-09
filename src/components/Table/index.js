@@ -33,10 +33,11 @@ class Table extends React.PureComponent {
         super(props);
 
         this._changeInput = this._changeInput.bind(this);
+        this._editableElement = {};
     }
 
     _changeInput(itemKey, value) {
-        editableElement[itemKey] = value;
+        this._editableElement[itemKey] = value;
     }
 
     render() {
@@ -86,7 +87,7 @@ class Table extends React.PureComponent {
                                             items={getElementEntries(element)}
                                             editableMode={!!editableElementId && !isEditableElement}
                                             isEditableElement={isEditableElement}
-                                            clickOnEditButton={() => clickOnEditButton(element._id || element.id, editableElement)}
+                                            clickOnEditButton={() => clickOnEditButton(element._id || element.id, this._editableElement)}
                                             changeInput={this._changeInput}
                                         />
                                     </TableListItem>
@@ -118,7 +119,5 @@ class Table extends React.PureComponent {
         return tableContent;
     }
 }
-
-let editableElement = {};
 
 export default Table;
