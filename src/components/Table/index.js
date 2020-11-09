@@ -37,7 +37,7 @@ function Table(props) {
         let elementKeys = Object.keys(element);
 
         if (hideElementId) {
-            elementKeys = elementKeys.filter((key) => key !== 'id');
+            elementKeys = elementKeys.filter((key) => key !== '_id' && key !== 'id');
         }
 
         return elementKeys;
@@ -47,7 +47,9 @@ function Table(props) {
 
     let tableContent;
 
-    if (areTableItemsObjects) {
+    if (items.length === 0) {
+        tableContent = <TableCell value='[]'/>;
+    } else if (areTableItemsObjects) {
         const elementKeys = getElementKeys(tableElement);
 
         tableContent = (
@@ -59,7 +61,7 @@ function Table(props) {
                     {
                         items.map((element) => (
                             <TableListItem
-                                key={element.id || getElementValues(element)[0]}> {/* in case the element has no 'id'  we will use value of its first key */}
+                                key={element._id || element.id || getElementValues(element)[0]}> {/* in case the element has no 'id'  we will use value of its first key */}
                                 <TableRow values={getElementValues(element)}/>
                             </TableListItem>
                         ))

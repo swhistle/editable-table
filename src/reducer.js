@@ -3,14 +3,22 @@ const initialState = {
     editableElementId: null
 };
 
+const Operations = {
+    loadElementList: (dispatch) => {
+        fetch('https://crudcrud.com/api/1f4422306d744a97a6c7deb4c7934987/unicorns')
+            .then((response) => response.json())
+            .then((data) => dispatch(ActionCreators[Actions.GetElementList](data)));
+    }
+};
+
 const Actions = {
-    LoadElementList: 'LOAD_ELEMENT_LIST'
+    GetElementList: 'LOAD_ELEMENT_LIST'
 }
 
 const ActionCreators = {
-    [Actions.LoadElementList]: (elementList) => {
+    [Actions.GetElementList]: (elementList) => {
         return {
-            type: Actions.LoadElementList,
+            type: Actions.GetElementList,
             payload: {
                 elementList
             }
@@ -20,7 +28,7 @@ const ActionCreators = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case Actions.LoadElementList:
+        case Actions.GetElementList:
             return {
                 ...state,
                 elementList: action.payload.elementList
@@ -31,4 +39,4 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-export {Actions, ActionCreators, reducer};
+export {Operations, Actions, ActionCreators, reducer};

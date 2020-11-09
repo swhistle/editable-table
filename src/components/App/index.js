@@ -2,9 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 
-import {ActionCreators, Actions} from '../../reducer';
+import {Operations, ActionCreators, Actions} from '../../reducer';
 import Table from '../Table';
-import unicorns from '../../data/unicorns.js';
 
 const TableContainer = styled.div`
   margin: 0 auto;
@@ -17,7 +16,7 @@ class App extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.props.onLoadElementList(unicorns);
+        this.props.onLoadElementList();
     }
 
     render() {
@@ -38,8 +37,8 @@ class App extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
 
 const mapDispatchToProps = (dispatch) => ({
-        onLoadElementList: (elementList) => {
-            dispatch(ActionCreators[Actions.LoadElementList](elementList));
+        onLoadElementList: () => {
+            Operations.loadElementList(dispatch);
         }
     }
 
