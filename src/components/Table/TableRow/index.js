@@ -1,33 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
 import TableCell from '../TableCell';
+import Button from '../../Button';
+import Input from '../../Input';
 
-function TableRow(props) {
-    const {values} = props;
+class TableRow extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    const TableCellsContainer = styled.div`
-        display: flex;
-        justify-content: space-between;
-    `;
+    render() {
+        const {items, isEditableElement, editableMode = false, withEditButton = true, clickOnEditButton, changeInput} = this.props;
 
-    const TableCellWrapper = styled.div`
-        width: ${100 / values.length}%;
-    `;
+        const TableCellsContainer = styled.div`
+            display: flex;
+            justify-content: space-between;
+        `;
 
-    return (
-        <TableCellsContainer>
-            {
-                values.map((value, index) => (
-                    <TableCellWrapper key={value + '_' + index}>
-                        <TableCell
-                            value={value}
-                        />
-                    </TableCellWrapper>
+        const TableCellWrapper = styled.div`
+            width: ${100 / items.length}%;
+        `;
 
-                ))
+        if (isEditableElement) {
+            const elementObject = items.reduce((acc, currentItem) => ({
+                ...acc,
+                [currentItem['key']]: currentItem['value']
+            }), {});
+
+            if (elementObject && typeof elementObject === 'object') {
             }
-        </TableCellsContainer>
-    )
+        }
+
+        return (
+            <TableCellsContainer>
+                {
+                    items.map((item) => (
+                        <TableCellWrapper key={item['key']}>
+                            <TableCell
+                                content={
+                                    isEditableElement ?
+                                        <Input inputValue={item['value']} itemKey={item['key']}
+                                               changeHandler={changeInput}/> :
+                                        item['value']
+                                }
+                            />
+                        </TableCellWrapper>
+                    ))
+                }
+
+                <TableCellWrapper>
+                    <TableCell
+                        content={withEditButton ?
+                            <Button text={isEditableElement ? 'Save' : 'Edit'} isDisabled={editableMode} clickHandler={clickOnEditButton}/> : ''}
+                    />
+                </TableCellWrapper>
+            </TableCellsContainer>
+        )
+    }
 }
 
 export default TableRow;
